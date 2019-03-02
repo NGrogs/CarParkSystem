@@ -289,7 +289,7 @@ public class GroganNeilTestTask3 {
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
 		Period pTest = new Period(9,20);
-		assertEquals(16.00, newRate.calculate(pTest));
+		assertEquals(BigDecimal.valueOf(16.00), newRate.calculate(pTest));
 	}
 	
 	//TEST CASE 22
@@ -319,7 +319,7 @@ public class GroganNeilTestTask3 {
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
 		Period pTest = new Period(8,9);
-		assertEquals(3.00, newRate.calculate(pTest));
+		assertEquals(BigDecimal.valueOf(3.00), newRate.calculate(pTest));
 	}	
 	
 	//TEST CASE 23
@@ -349,7 +349,7 @@ public class GroganNeilTestTask3 {
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
 		Period pTest = new Period(5,7);
-		assertEquals(3.50, newRate.calculate(pTest));
+		assertEquals(BigDecimal.valueOf(3.50), newRate.calculate(pTest));
 	}
 	
 	//TEST CASE 24	
@@ -379,7 +379,7 @@ public class GroganNeilTestTask3 {
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
 		Period pTest = new Period(5,6);
-		assertEquals(8.875, newRate.calculate(pTest));
+		assertEquals(BigDecimal.valueOf(8.875), newRate.calculate(pTest));
 	}
 	
 }

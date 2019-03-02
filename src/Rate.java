@@ -94,8 +94,79 @@ public class Rate {
     public BigDecimal calculate(Period periodStay) {
         int normalRateHours = periodStay.occurences(normal);
         int reducedRateHours = periodStay.occurences(reduced);
-        return (this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours))).add(
-                this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        BigDecimal toPay = BigDecimal.ZERO;
+        
+        //* new specification *//
+        // max 16 
+        if(this.kind == CarParkKind.STAFF)
+        {
+        	toPay = this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours)).add(
+                    this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        	//if more than 16
+        	if(toPay.compareTo(BigDecimal.valueOf(16.00)) == 1)
+        	{
+        		toPay = BigDecimal.valueOf(16.00);
+        	}
+        	
+        }
+        // 25% off above 5.50
+        if(this.kind == CarParkKind.STUDENT)
+        {
+        	toPay = this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours)).add(
+                    this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        	//if above 5.50
+        	if(toPay.compareTo(BigDecimal.valueOf(5.50)) == 1)
+        	{
+        		// get extra amount
+        		BigDecimal reducedAmount = toPay.subtract(BigDecimal.valueOf(5.50));
+        		//get 25% of the extra
+        		reducedAmount = reducedAmount.multiply(BigDecimal.valueOf(0.25));
+        		
+        		//add reduced amount to the 5.50
+        		toPay = BigDecimal.valueOf(5.50);
+        		toPay.add(reducedAmount);
+        	}
+        }
+        //minimum of 3
+        if(this.kind == CarParkKind.MANAGEMENT)
+        {
+        	toPay = this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours)).add(
+                    this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        	//if less than 3
+        	if(toPay.compareTo(BigDecimal.valueOf(3.00)) == -1)
+        	{
+        		toPay = BigDecimal.valueOf(3.00);
+        	}
+        }
+        //first 8 free - 50% off remaining
+        if(this.kind == CarParkKind.VISITOR)
+        {
+        	
+        	toPay = this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours)).add(
+                    this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        	
+        	// if more than 8 - otherwise free
+        	if(toPay.compareTo(BigDecimal.valueOf(8.00)) == 1) 
+        	{
+        		// get extra amount
+        		BigDecimal reducedAmount = toPay.subtract(BigDecimal.valueOf(8.00));
+        		
+        		//get 50% of reduced amount
+        		reducedAmount.multiply(BigDecimal.valueOf(0.50));
+        		
+        		// let the pay = the discounted remainder
+        		toPay = reducedAmount;	
+        		
+        	}
+        	else
+        	{
+        		//less than 8 is free
+        		toPay = BigDecimal.ZERO;
+        	}
+        	
+        }
+        
+        return toPay;
     }
 
 }
