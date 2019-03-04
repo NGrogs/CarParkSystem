@@ -385,5 +385,35 @@ public class GroganNeilTestTask3 {
 		assertEquals(BigDecimal.valueOf(8.875), newRate.calculate(pTest));
 	}
 	
+	//TEST CASE 23
+	//test car park kind affects calculate for visitor
+	@org.junit.Test
+	public void visitorFreePeriodCalculate(){
+		CarParkKind cpk = CarParkKind.VISITOR;
+		BigDecimal normalRate = new BigDecimal(2.00);
+		BigDecimal reducedRate = new BigDecimal(1.00);
+		Period p1 = new Period(5,7);
+		Period p2 = new Period(13,14);
+		Period p3 = new Period(18,20);
+		
+		Period p4 = new Period(8,12);
+		Period p5 = new Period(15,17);
+		
+		ArrayList<Period> normal = new ArrayList<>();
+		ArrayList<Period> reduced = new ArrayList<>();
+		
+		normal.add(p1);
+		normal.add(p2);
+		normal.add(p3);
+		
+		reduced.add(p4);
+		reduced.add(p5);
+		
+		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
+		
+		Period pTest = new Period(5,7);
+		assertEquals(BigDecimal.valueOf(0), newRate.calculate(pTest));
+	}
+	
 }
 
