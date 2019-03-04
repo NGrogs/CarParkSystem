@@ -92,8 +92,11 @@ public class GroganNeilTestTask3 {
 		BigDecimal normalRate = new BigDecimal(2.00);
 		BigDecimal reducedRate = new BigDecimal(1.00);	
 		
+		ArrayList<Period> normal = new ArrayList<>();
+		ArrayList<Period> reduced = new ArrayList<>();
 		
-		Rate newRate = new Rate(cpk, normalRate, reducedRate, null, null);
+		
+		Rate newRate = new Rate(cpk, normalRate, reducedRate, normal, reduced);
     }
 	
 	// TEST CASE 6
@@ -112,7 +115,7 @@ public class GroganNeilTestTask3 {
 		normal.add(p1);
 		reduced.add(p2);
 		
-		Rate newRate = new Rate(cpk, null, null, reduced, normal);
+		Rate newRate = new Rate(cpk, normalRate, reducedRate, null, null);
     }
 	
 	// TEST CASE 7
@@ -142,7 +145,7 @@ public class GroganNeilTestTask3 {
 		BigDecimal normalRate = new BigDecimal(3.00);
 		BigDecimal reducedRate = new BigDecimal(2.00);
 		Period p1 = new Period(9,12);
-		Period p2 = new Period(13,24);
+		Period p2 = new Period(13,25);
 		
 		ArrayList<Period> normal = new ArrayList<>();
 		ArrayList<Period> reduced = new ArrayList<>();
@@ -161,7 +164,7 @@ public class GroganNeilTestTask3 {
 		BigDecimal normalRate = new BigDecimal(3.00);
 		BigDecimal reducedRate = new BigDecimal(1.00);
 		Period p1 = new Period(-1,3);
-		Period p2 = new Period(9,11);
+		Period p2 = new Period(9,-13);
 		
 		ArrayList<Period> normal = new ArrayList<>();
 		ArrayList<Period> reduced = new ArrayList<>();
@@ -177,8 +180,8 @@ public class GroganNeilTestTask3 {
 	@org.junit.Test(expected = IllegalArgumentException.class)
     public void belowZeroRate() throws Exception {
 		CarParkKind cpk = CarParkKind.STAFF;
-		BigDecimal normalRate = new BigDecimal(-1.00);
-		BigDecimal reducedRate = new BigDecimal(-.000001);
+		BigDecimal normalRate = new BigDecimal("-1.00");
+		BigDecimal reducedRate = new BigDecimal("-.000001");
 		Period p1 = new Period(5,7);
 		Period p2 = new Period(9,11);
 		
@@ -234,8 +237,8 @@ public class GroganNeilTestTask3 {
 	@org.junit.Test(expected = IllegalArgumentException.class)
     public void durationMethod() throws Exception {
 		Period p1 = new Period(5,7);
-		// any hour started counts as full so 2-5 should be 3 hours?
-		assertEquals(3, p1.duration());
+		// any hour started counts as full so 2-5 should be 2 hours?
+		assertEquals(2, p1.duration());
     }
 	
 	// TEST CASE 14
@@ -327,7 +330,7 @@ public class GroganNeilTestTask3 {
 	@org.junit.Test
 	public void visitor8FreePeriodCalculate(){
 		CarParkKind cpk = CarParkKind.VISITOR;
-		BigDecimal normalRate = new BigDecimal(5.00);
+		BigDecimal normalRate = new BigDecimal(7.00);
 		BigDecimal reducedRate = new BigDecimal(2.00);
 		Period p1 = new Period(5,7);
 		Period p2 = new Period(13,14);
@@ -349,7 +352,7 @@ public class GroganNeilTestTask3 {
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
 		Period pTest = new Period(5,7);
-		assertEquals(BigDecimal.valueOf(3.50), newRate.calculate(pTest));
+		assertEquals(BigDecimal.valueOf(3), newRate.calculate(pTest));
 	}
 	
 	//TEST CASE 24	
@@ -378,7 +381,7 @@ public class GroganNeilTestTask3 {
 		
 		Rate newRate = new Rate(cpk, normalRate, reducedRate, reduced, normal);
 		
-		Period pTest = new Period(5,6);
+		Period pTest = new Period(5,7);
 		assertEquals(BigDecimal.valueOf(8.875), newRate.calculate(pTest));
 	}
 	

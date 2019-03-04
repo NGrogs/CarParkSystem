@@ -115,16 +115,16 @@ public class Rate {
         	toPay = this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours)).add(
                     this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
         	//if above 5.50
-        	if(toPay.compareTo(BigDecimal.valueOf(5.50)) == 1)
+        	if(toPay.compareTo(BigDecimal.valueOf(5.50)) > 0)
         	{
         		// get extra amount
         		BigDecimal reducedAmount = toPay.subtract(BigDecimal.valueOf(5.50));
-        		//get 25% of the extra
-        		reducedAmount = reducedAmount.multiply(BigDecimal.valueOf(0.25));
+        		//get 75% of the extra
+        		reducedAmount = reducedAmount.multiply(BigDecimal.valueOf(0.75));
         		
         		//add reduced amount to the 5.50
         		toPay = BigDecimal.valueOf(5.50);
-        		toPay.add(reducedAmount);
+        		toPay = toPay.add(reducedAmount);
         	}
         }
         //minimum of 3
@@ -146,16 +146,16 @@ public class Rate {
                     this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
         	
         	// if more than 8 - otherwise free
-        	if(toPay.compareTo(BigDecimal.valueOf(8.00)) == 1) 
+        	if(toPay.compareTo(BigDecimal.valueOf(8.00)) > 0) 
         	{
         		// get extra amount
         		BigDecimal reducedAmount = toPay.subtract(BigDecimal.valueOf(8.00));
         		
         		//get 50% of reduced amount
-        		reducedAmount.multiply(BigDecimal.valueOf(0.50));
+        		reducedAmount = reducedAmount.multiply(BigDecimal.valueOf(0.50));
         		
         		// let the pay = the discounted remainder
-        		toPay = reducedAmount;	
+        		toPay = reducedAmount.stripTrailingZeros();	
         		
         	}
         	else
