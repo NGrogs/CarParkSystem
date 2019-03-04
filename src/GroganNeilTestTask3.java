@@ -385,8 +385,8 @@ public class GroganNeilTestTask3 {
 		assertEquals(BigDecimal.valueOf(8.875), newRate.calculate(pTest));
 	}
 	
-	//TEST CASE 23
-	//test car park kind affects calculate for visitor
+	//TEST CASE 25
+	//test car park kind affects calculate for visitor 
 	@org.junit.Test
 	public void visitorFreePeriodCalculate(){
 		CarParkKind cpk = CarParkKind.VISITOR;
